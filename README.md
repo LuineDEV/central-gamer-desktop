@@ -1,6 +1,6 @@
 # Central Gamer - Hub Desktop para Gerenciamento Pessoal de Gamers
 
-![Central Gamer Logo](web/assets/logo.png) ## 🚀 Visão Geral do Projeto
+## 🚀 Visão Geral do Projeto
 
 A **Central Gamer** é uma aplicação desktop robusta e interativa, desenvolvida para ser o hub central na gestão da vida digital de qualquer gamer. Construída com uma arquitetura **full-stack**, a aplicação combina o poder do **Python (Eel)** no backend para lógica de negócios e integração com APIs, e uma interface moderna e responsiva desenvolvida com **HTML, CSS e JavaScript**. Os dados são persistidos de forma segura em um banco de dados **MySQL**.
 
