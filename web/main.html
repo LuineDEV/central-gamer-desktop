@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Gamer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="loading-spinner" class="spinner-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="custom-confirm-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="confirm-modal-title">Confirmar Ação</h3>
+            <p id="confirm-modal-message">Você tem certeza que deseja realizar esta ação?</p>
+            <div class="modal-actions">
+                <button id="confirm-modal-yes-btn" class="confirm-yes-btn">Sim</button>
+                <button id="confirm-modal-no-btn" class="confirm-no-btn">Não</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-container" class="form-container view">
+        <h2>Acessar Conta</h2>
+        <div id="login-message-area" class="message-area"></div>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-senha">Senha:</label>
+                <input type="password" id="login-senha" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <p class="toggle-link">Não tem uma conta? <a href="#" id="show-register">Cadastre-se</a>.</p>
+    </div>
+
+    <div id="register-container" class="form-container view hidden">
+        <h2>Criar Conta</h2>
+        <div id="register-message-area" class="message-area"></div>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="register-nome">Nome:</label>
+                <input type="text" id="register-nome" required>
+            </div>
+            <div class="form-group">
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" required>
+            </div>
+            <div class="form-group">
+                <label for="register-senha">Senha:</label>
+                <input type="password" id="register-senha" required>
+            </div>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <p class="toggle-link">Já tem uma conta? <a href="#" id="show-login">Faça login</a>.</p>
+    </div>
+
+    <div id="dashboard-container" class="view hidden">
+        <header class="dashboard-header">
+            <div class="user-display">
+                <img src="assets/default-avatar.png" alt="Avatar do Usuário" id="dashboard-avatar-img">
+                <h2 id="welcome-message"></h2>
+            </div>
+            <div class="header-buttons">
+                <button id="profile-button" class="profile-button nav-button" data-target="profile-container">Meu Perfil</button>
+                <button id="logout-button" class="logout-button">Sair</button>
+            </div>
+        </header>
+
+        <nav class="top-nav">
+            <button id="nav-home-button" class="nav-button" data-target="dashboard-home-view">Início</button>
+            <button id="nav-streamers-button" class="nav-button" data-target="dashboard-streamers-view">Streamers</button>
+            <button id="nav-biblioteca-button" class="nav-button" data-target="dashboard-biblioteca-view">Biblioteca</button>
+            <button id="nav-notepad-button" class="nav-button" data-target="dashboard-notepad-view">Notas</button>
+        </nav>
+
+        <main id="dashboard-content-views"> 
+
+            <div id="dashboard-home-view" class="view hidden">
+                <div class="home-summary-section">
+                    <h3>Visão Geral</h3>
+                    <div class="summary-cards-container">
+                        <div class="summary-card">
+                            <h4>Total de Jogos</h4>
+                            <p id="total-games-count">0</p>
+                            <button class="quick-action-btn" data-target-view="dashboard-biblioteca-view">Gerenciar Jogos</button>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Total de Streamers</h4>
+                            <p id="total-streamers-count">0</p>
+                            <button class="quick-action-btn" data-target-view="dashboard-streamers-view">Gerenciar Streamers</button>
+                        </div>
+                    </div>
+
+                    <h4>Ações Rápidas</h4>
+                    <div class="quick-actions-buttons">
+                        <button class="quick-action-btn" data-action="add-game">Adicionar Novo Jogo</button>
+                        <button class="quick-action-btn" data-action="add-streamer">Adicionar Novo Streamer</button>
+                        <button class="quick-action-btn" data-action="add-note">Adicionar Nova Nota</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dashboard-streamers-view" class="view hidden">
+                <div class="streamer-section">
+                    <h3>Meus Streamers Favoritos</h3>
+                    <div id="streamer-list-loading" class="local-spinner hidden">
+                        <div class="spinner-small"></div> Carregando streamers...
+                    </div>
+                    <ul id="streamer-list"></ul>
+                    <form id="add-streamer-form" class="inline-form">
+                        <input type="text" id="streamer-name-input" placeholder="Nome do canal da Twitch" required>
+                        <button type="submit">Adicionar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="dashboard-biblioteca-view" class="view hidden">
+                <div class="games-section">
+                    <h3>Minha Biblioteca de Jogos</h3>
+                    <div id="biblioteca-message-area" class="message-area"></div>
+                    
+                    <form id="add-edit-game-form" class="game-form">
+                        <input type="hidden" id="game-id-input">
+                        <div class="form-group">
+                            <label for="game-name-input">Nome do Jogo:</label>
+                            <input type="text" id="game-name-input" required placeholder="Ex: Elden Ring">
+                        </div>
+                        <div class="form-group">
+                            <label for="game-platform-input">Plataforma:</label>
+                            <input type="text" id="game-platform-input" required placeholder="Ex: PC, PS5, Switch">
+                        </div>
+                        <div class="form-group">
+                            <label for="game-status-select">Status:</label>
+                            <select id="game-status-select" required>
+                                <option value="Jogando">Jogando</option>
+                                <option value="Completo">Completo</option>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Desejo">Lista de Desejos</option>
+                                <option value="Abandonado">Abandonado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="game-hours-input">Horas Jogadas:</label>
+                            <input type="number" id="game-hours-input" min="0" step="0.01" value="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="game-rating-select">Avaliação (1-5 Estrelas):</label>
+                            <select id="game-rating-select">
+                                <option value="">Nenhuma</option>
+                                <option value="1">1 Estrela</option>
+                                <option value="2">2 Estrelas</option>
+                                <option value="3">3 Estrelas</option>
+                                <option value="4">4 Estrelas</option>
+                                <option value="5">5 Estrelas</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="game-notes-textarea">Observações:</label>
+                            <textarea id="game-notes-textarea" rows="3" placeholder="Anote algo sobre o jogo..."></textarea>
+                        </div>
+                        <button type="submit" id="save-game-btn">Adicionar Jogo</button>
+                        <button type="button" id="cancel-edit-game-btn" class="hidden">Cancelar Edição</button>
+                    </form>
+
+                    <h4>Meus Jogos</h4>
+                    <div id="game-list-loading" class="local-spinner hidden">
+                        <div class="spinner-small"></div> Carregando jogos...
+                    </div>
+                    <ul id="game-list">
+                        <li>Nenhum jogo adicionado ainda.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="dashboard-notepad-view" class="view hidden">
+                <div class="notepad-section">
+                    <h3>Meu Bloco de Notas</h3>
+                    <div id="notepad-message-area" class="message-area"></div>
+
+                    <form id="add-edit-note-form" class="note-form">
+                        <input type="hidden" id="note-id-input">
+                        <div class="form-group">
+                            <label for="note-title-input">Título da Nota:</label>
+                            <input type="text" id="note-title-input" required placeholder="Ex: Ideias para build do Guerreiro">
+                        </div>
+                        <div class="form-group">
+                            <label for="note-content-textarea">Conteúdo da Nota:</label>
+                            <textarea id="note-content-textarea" rows="8" required placeholder="Detalhes, estratégias, lembretes..."></textarea>
+                        </div>
+                        <button type="submit" id="save-note-btn">Adicionar Nota</button>
+                        <button type="button" id="cancel-edit-note-btn" class="hidden">Cancelar Edição</button>
+                    </form>
+
+                    <h4>Minhas Notas</h4>
+                    <div id="note-list-loading" class="local-spinner hidden">
+                        <div class="spinner-small"></div> Carregando notas...
+                    </div>
+                    <ul id="note-list">
+                        <li>Nenhuma nota adicionada ainda.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+    </div> <div id="profile-container" class="view hidden">
+        <header class="dashboard-header">
+            <h2>Meu Perfil</h2>
+            <button id="back-to-dashboard-btn" class="logout-button nav-button" data-target="dashboard-container">&larr; Voltar</button>
+        </header>
+
+        <div class="avatar-section">
+            <img src="assets/default-avatar.png" alt="Avatar do Perfil" id="profile-avatar-img">
+            <p id="member-since-text"></p>
+            <input type="file" id="avatar-upload-input" class="hidden" accept="image/png, image/jpeg">
+            <label for="avatar-upload-input" class="button-like-label">Trocar Avatar</label>
+            <button id="save-avatar-btn" class="hidden">Salvar Novo Avatar</button>
+        </div>
+
+        <div class="profile-forms-wrapper">
+            <div class="form-section main-profile-form">
+                <h3>Minhas Informações</h3>
+                <form id="update-profile-form">
+                    <div class="form-group">
+                        <label for="profile-name">Nome:</label>
+                        <input type="text" id="profile-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-email">Email:</label>
+                        <input type="email" id="profile-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-bio">Sobre Mim (Bio):</label>
+                        <textarea id="profile-bio" rows="4"
+                            placeholder="Fale um pouco sobre você, seus jogos favoritos, etc."></textarea>
+                    </div>
+                    <h4>Links Sociais</h4>
+                    <div class="form-group">
+                        <label for="profile-steam">URL do Perfil Steam:</label>
+                        <input type="url" id="profile-steam" placeholder="https://steamcommunity.com/id/seu_usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-twitch">URL do Canal Twitch:</label>
+                        <input type="url" id="profile-twitch" placeholder="https://www.twitch.tv/seu_canal">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-discord">ID do Discord:</label>
+                        <input type="text" id="profile-discord" placeholder="seu_nick#1234">
+                    </div>
+                    <button type="submit">Salvar Alterações</button>
+                </form>
+            </div>
+
+            <div class="form-section password-section">
+                <h3>Alterar Senha</h3>
+                <form id="update-password-form">
+                    <div class="form-group">
+                        <label for="current-password">Senha Atual:</label>
+                        <input type="password" id="current-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">Nova Senha:</label>
+                        <input type="password" id="new-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmar Nova Senha:</label>
+                        <input type="password" id="confirm-password" required>
+                    </div>
+                    <button type="submit">Alterar Senha</button>
+                </form>
+                <div class="form-section danger-zone">
+                    <h3>Zona de Perigo</h3>
+                    <p>A ação abaixo é permanente e não pode ser desfeita.</p>
+                    <button id="delete-account-btn" class="danger-button">Deletar Minha Conta</button>
+                </div>
+            </div>
+
+            <div class="form-section theme-settings-section">
+                <h3>Configurações de Tema</h3>
+                <div class="form-group">
+                    <label>Escolha seu Tema:</label>
+                    <div class="theme-options">
+                        <label class="theme-option">
+                            <input type="radio" name="theme-choice" value="dark-blue" id="dark-blue">
+                            <span class="theme-name">Dark Blue (Padrão)</span>
+                        </label>
+                        <label class="theme-option">
+                            <input type="radio" name="theme-choice" value="theme-forest-green" id="theme-forest-green">
+                            <span class="theme-name">Forest Green</span>
+                        </label>
+                        <label class="theme-option">
+                            <input type="radio" name="theme-choice" value="theme-purple-haze" id="theme-purple-haze">
+                            <span class="theme-name">Purple Haze</span>
+                        </label>
+                        <label class="theme-option">
+                            <input type="radio" name="theme-choice" value="theme-golden-dawn" id="theme-golden-dawn">
+                            <span class="theme-name">Golden Dawn</span>
+                        </label>
+                        <label class="theme-option">
+                            <input type="radio" name="theme-choice" value="theme-cyber-night" id="theme-cyber-night">
+                            <span class="theme-name">Cyber Night</span>
+                        </label>
+                        <label class="theme-option">
+                            <input type="radio" name="theme-choice" value="theme-ocean-breeze" id="theme-ocean-breeze">
+                            <span class="theme-name">Ocean Breeze</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="button" id="save-theme-btn">Salvar Tema</button>
+                <div id="theme-message-area" class="message-area"></div>
+            </div>
+
+        </div> <div id="profile-message-area" class="message-area"></div>
+    </div> <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>

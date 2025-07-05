@@ -1,0 +1,34 @@
+# Ignorar arquivos de ambiente virtual do Python
+.venv/
+venv/
+env/
+
+# Ignorar arquivos de cache e compilados do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar arquivos de pacotes do PyInstaller e executáveis
+build/
+dist/
+*.spec
+*.exe  # Seu executável
+*.zip
+*.tar.gz
+
+# Ignorar o arquivo de variáveis de ambiente sensíveis
+.env
+
+# Ignorar arquivos específicos do Eel (se gerados fora de web/)
+eel.js
+
+# Ignorar arquivos específicos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de log (se você tiver)
+*.log
+
+# Ignorar uploads de usuário
+web/uploads/avatars/
