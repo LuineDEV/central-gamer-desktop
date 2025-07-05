@@ -14,8 +14,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # --- CONFIGURAÇÃO DAS CREDENCIAIS E CONSTANTES ---
 # ATENÇÃO: Em um ambiente de produção, estas credenciais não devem ser expostas diretamente no código.
 # Considere usar variáveis de ambiente ou um sistema de configuração seguro.
-TWITCH_CLIENT_ID = "f32er2018ufsjlu25mmh0bia40m43f"
-TWITCH_CLIENT_SECRET = "6ipz7fid0axxx6q7zd2ukyhdvx3ofz"
+TWITCH_CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
+TWITCH_CLIENT_SECRET = os.getenv("TWITCH_CLIENT_SECRET")
 
 TWITCH_AUTH_URL = "https://id.twitch.tv/oauth2/token"
 TWITCH_HELIX_URL = "https://api.twitch.tv/helix"
